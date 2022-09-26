@@ -1,3 +1,4 @@
+from lattice.wilson_fermions.clifford import gamma5
 from ..lattice import Lattice
 from ..operators.spin_operators import SpinSOperator
 from ..operators.fermionic_operators import FermionicOperator
@@ -337,8 +338,11 @@ def hamilton_wilson(lattice, rep, params, output='qiskit'):
 # 6. Set up a simplified routine to get the combined mass-wilson-hopping part of the Hamiltonian
 ################################################################################################
 
+def hamilton_hopp_mass_wilson(lattice,rep,params,output='qiskit'):
+    mass, hopp = terms_hamilton_hopp_mass_wilson(lattice,rep,params,output)
+    return mass + hopp
 
-def hamilton_hopp_mass_wilson(lattice, rep, params, output='qiskit'):
+def terms_hamilton_hopp_mass_wilson(lattice, rep, params, output='qiskit'):
     """
     Constructs the hopping-mass-wilson part of the Hamiltonian for a two component
     dirac field ona a one or two dimensional lattice.
@@ -449,7 +453,7 @@ def hamilton_hopp_mass_wilson(lattice, rep, params, output='qiskit'):
     hopp_term = operator_sum(hopping_summands)
 
     # 7. summing hopping and diagonal term together
-    return diagonal_term + hopp_term
+    return diagonal_term, hopp_term
 
 
 ################################################################################################
@@ -483,15 +487,15 @@ def build_hamilton(lattice, params, rep=dirac, lam=20., boundary_cond=None, outp
 
     """
 
-    print('##### Building the Hamiltonian #########')
+    # print('##### Building the Hamiltonian #########')
     mass_hopping_wilson_part = hamilton_hopp_mass_wilson(lattice,
                                                          rep=rep,
                                                          params=params,
                                                          output=output)
 
     hamilton = mass_hopping_wilson_part
-    print('Mass, Hopping & Wilson energy added........')
-    print(hamilton)
+    # print('Mass, Hopping & Wilson energy added........')
+    # print(hamilton)
     if params['S'] > 0:
         # Set up the gauge field energy#nota che deve avere la stessa dimensionlità
         gauge_part = (fermion_id(lattice)
@@ -505,8 +509,8 @@ def build_hamilton(lattice, params, rep=dirac, lam=20., boundary_cond=None, outp
                                                      output=output)
 
         hamilton += gauge_part + gauge_regularization
-        print('Gauge field flux energy added.')
-        print('Gauge invariance regulator added.')
+        # print('Gauge field flux energy added.')
+        # print('Gauge invariance regulator added.')
 
         # Set up and add the gauge field plaquette energy if space dimension is > 1.
         if lattice.ndim > 1:
@@ -514,7 +518,7 @@ def build_hamilton(lattice, params, rep=dirac, lam=20., boundary_cond=None, outp
                               @ hamilton_plaquette(lattice, params=params)).to_qubit_operator(output=output)
 
             hamilton += plaquette_part
-            print('Plaquette energy added.')
+            # print('Plaquette energy added.')
 
-    print('##### Hamiltonian successfully built #####')
+    # print('##### Hamiltonian successfully built #####')
     return hamilton

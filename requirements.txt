@@ -95,12 +95,12 @@ python-constraint==1.4.0
 python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
 pytz==2022.2.1
 pyzmq @ file:///opt/conda/conda-bld/pyzmq_1657724186960/work
-qiskit==0.21.0
-qiskit-aer==0.6.1
-qiskit-aqua==0.7.5
-qiskit-ibmq-provider==0.9.0
-qiskit-ignis==0.4.0
-qiskit-terra==0.15.2
+qiskit==0.32.1
+qiskit-aer==0.9.1
+qiskit-aqua==0.9.5
+qiskit-ibmq-provider==0.18.1
+qiskit-ignis==0.6.0
+qiskit-terra==0.18.3
 qtconsole @ file:///opt/conda/conda-bld/qtconsole_1662018252641/work
 QtPy @ file:///opt/conda/conda-bld/qtpy_1662014892439/work
 Quandl==3.7.0
