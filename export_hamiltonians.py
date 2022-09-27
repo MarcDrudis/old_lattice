@@ -21,7 +21,6 @@ spin, m,t,r,a,e,lam = sys.argv[1:]
 
 
 
-
 S = float(spin)
 ms = 0.
 rep = dirac
@@ -46,6 +45,7 @@ hamiltonian = build_hamilton(lattice=lattice_simplest,
                                 lam = params['lam'],
                                 boundary_cond=boundary_cond,
                                 output='qiskit')
+print(params)
 # hamiltonian.chop()
 
 # hamilton_qt = build_hamilton(lattice=lattice_simplest, 
@@ -63,11 +63,13 @@ mass,hopp = terms_hamilton_hopp_mass_wilson(lattice_simplest,rep,params,'qiskit'
 link = (fermion_id(lattice_simplest)@ hamilton_gauge(lattice_simplest, params=params)).to_qubit_operator(output='qiskit')
 regularizer = gauss_law_regularizer(lattice_simplest, params,lam=params['lam'],boundary_cond=boundary_cond,output='qiskit')
 
-mass.to_file('/home/drudis/Documents/StoredOps/mass.txt')
-hopp.to_file('/home/drudis/Documents/StoredOps/hopp.txt')
-link.to_file('/home/drudis/Documents/StoredOps/link.txt')
-regularizer.to_file('/home/drudis/Documents/StoredOps/regularizer.txt')
 
-assert hamiltonian == mass+hopp+link+regularizer , "Hamlitonian Error"
+print(hamiltonian == mass + hopp+link+regularizer)
+print(params['lam'] == 20.0)
 
-print("Success at creating old Hamiltonian")
+if (hamiltonian == mass+hopp+link+regularizer) and (params["lam"]==20):
+    mass.to_file('/home/drudis/Documents/StoredOps/mass.txt')
+    hopp.to_file('/home/drudis/Documents/StoredOps/hopp.txt')
+    link.to_file('/home/drudis/Documents/StoredOps/link.txt')
+    regularizer.to_file('/home/drudis/Documents/StoredOps/regularizer.txt')
+    hamiltonian.to_file('/home/drudis/Documents/StoredOps/hamiltonian.txt')

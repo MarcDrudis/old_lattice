@@ -331,6 +331,7 @@ class SpinSOperator(ParticleTypeOperator):
             if mode == 'log_encoding':
                 self.transformed_XYZI = self.operator_list[0]._logarithmic_encoding()
             elif mode == 'lin_encoding':
+                print("Using linear enconding!!!")
                 self.transformed_XYZI = self.operator_list[0]._linear_encoding()
             else:
                 raise UserWarning("`mode` for spinS to qubit transform must be one of "
@@ -831,6 +832,7 @@ class BaseSpinOperator(ParticleTypeOperator):
             if mode == 'log_encoding':
                 self.transformed_XYZI = self._logarithmic_encoding()
             elif mode == 'lin_encoding':
+                print("Using linear encoding!!!")
                 self.transformed_XYZI = self._linear_encoding()
             else:
                 raise UserWarning("`mode` for BaseSpinOperator to qubit transform must be one of "

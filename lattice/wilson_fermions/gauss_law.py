@@ -60,6 +60,8 @@ def gauge_operator(site, lattice, params, boundary_cond=None, output='qutip'):
                                                                                       boundary_flux,
                                                                                       S)
             charge_offset -= e * (boundary_flux + theta)
+            print(e * (boundary_flux + theta))
+
             rhs_edge_i = None
         else:
             
@@ -85,6 +87,7 @@ def gauge_operator(site, lattice, params, boundary_cond=None, output='qutip'):
                                                                                       boundary_flux,
                                                                                       S)
             charge_offset += e * (boundary_flux + theta)
+            print(e * (boundary_flux + theta))
             
             lhs_edge_i = None
         else:
